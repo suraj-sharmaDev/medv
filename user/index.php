@@ -186,24 +186,26 @@ if(isset($_POST['submit'])){
 $username=$_POST['user'];
 $pwd=$_POST['password'];
 require_once(__ROOT__.'/curl_helper.php');
-    $action = "POST";
-$url = 'http://182.18.157.79/medv/api/customer/w/CustLogin?userName='.$username.'&pwd='.$pwd;
-//create a new cURL resource
-$parameters = json_encode(array());
-    $result = CurlHelper::perform_http_request($action, $url, $parameters);
+$action = "POST";
+$url = 'http://182.18.157.79/medv/api/customer/w/CustLogin';
+$parameters = array("username" => $username,"pwd" => $pwd);
+print_r($parameters)
+// //create a new cURL resource
+// $parameters = json_encode(array());
+//     $result = CurlHelper::perform_http_request($action, $url, $parameters);
 
-    if($result == -1){
-         echo "<script>
-            alert('User Not Exist');
-               window.location='../user';
-               </script>";
-    }
-    else{
-      echo "<script>
-            alert('Logged In Successfully $result');
-            window.location='../';
-      </script>";
-      $_SESSION['custid']=$result;
-    }
-}
-?>
+//     if($result == -1){
+//          echo "<script>
+//             alert('User Not Exist');
+//                window.location='../user';
+//                </script>";
+//     }
+//     else{
+//       echo "<script>
+//             alert('Logged In Successfully $result');
+//             window.location='../';
+//       </script>";
+//       $_SESSION['custid']=$result;
+//     }
+// }
+// ?>

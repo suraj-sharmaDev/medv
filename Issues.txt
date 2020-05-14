@@ -1,0 +1,12 @@
+Issues
+-------
+
+`Enter` key up deletes the item
+`Deleting` item deletes the prescription
+sqli Injection
+
+
+RDP IP ADDRESS : 182.18.157.79:33893
+Username  : Administrator
+Password   :  -xMSas*3ryg#w7
+Hostname  : Ingex_C06791

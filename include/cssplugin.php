@@ -1,7 +1,5 @@
 
- <?php
- $URL = 'http://gwebsolution.com/demo/medv';
- ?>
+ <?php require_once('constants.php');?>
  <title>MedV</title>
  <meta charset="utf-8">
  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">

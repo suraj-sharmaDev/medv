@@ -1,0 +1,175 @@
+Test Credentials 
+-----------------
+User Name : Nauf	Passwird : 1234
+User Name : Arun	Passwird : 1234
+User Name : Kir	Passwird :  ABCD
+
+-----------------------------------------------
+Customer Address list
+[httpGet]
+http://182.18.157.79/medv/api/customer/CustAddlist?custId=4054
+----------------------------------------------
+Careate or Update Customer Address 
+[HttpPost]
+http://182.18.157.79/medv/api/customer/CreateOrUpdateCustAdd
+           { 
+            "AddressId" : 455, 
+            "CustomerId" :409854,
+            "AddLabel" : "Achiveed",
+            "Address" : "Flat no 453, 4th Floor,ABC Appartment, St.Patrics School Road",
+            "Location" : "Indiranagar, Bangalore",
+            "LandMark" : "New LandMark - Near #4 Avanue",
+            "MobNo" : 999999,
+            "GEOLat" : 35.929673,
+            "GEOLng" : -78.948237,
+            "PIN" : 876564,
+            "Token" : "YUIOUI45678#$%^&*GH",
+            "DeviceId" : "DGDGW4M5"
+        }
+NOTE: Token and DeviceId is not requied when u consume this api from web , u can pass null in this case.
+            For New address "AddressId"  will be 0, For update existing address "AddressId" will have value to update
+Result : Success returns 1 else 0
+-------------------------------------------------------------------------
+************************************************************************************************************
+Update 07-05-2020
+Create or update Order 
+-------------------------
+http://182.18.157.79/medv/api/order/createOrder
+{	
+              "Order_Id":0,
+              "Customer_Id":4056, 
+              "OrderComment":"Extra comment ",
+              "Address_Id" : 3189,
+              "liOrdDtls" : [{
+                  "MedicineId":86935,
+        	        "Order_Qty" : 1
+                     },{
+                  "MedicineId":160467,
+        	        "Order_Qty" : 1
+        },{
+                  "MedicineId":134130,
+        	        "Order_Qty" : 1
+        }, {
+                  "MedicineId":134130,
+        	        "Order_Qty" : 1
+        },{
+                  "MedicineId":134130,
+        	        "Order_Qty" : 1
+        }]	
+ }
+
+Note : Submit responce 
+          Onsuccess it will return New "orderId" (int) and No of "notifiedMerCount" (int)
+
+To Upload Image(s)
+---------------------
+http://182.18.157.79/medv/api/Image/uploadPrescription
+
+Sample Code 
+Note : Argument "OrderId" will be the value which is returned from above api response
+-------------------------
+<script>
+    $(function () {
+        $("#btnPostFile").click(function () {
+            if ($("#file1").val() == '') {
+                alert("Please Select file.")
+            }
+
+            var formdata = new FormData();
+            var file = $("#file1")[0].files[0];
+            var newFileName = "123" + "." + file.name.split(".").pop();
+            formdata.append('file', file, newFileName);
+            formdata.append('OrderId', <API response value>);
+            debugger;
+            $.ajax({
+                url: 'http://182.18.157.79/medv/api/Image/uploadPrescription',
+                type: 'POST',
+                data: formdata,
+                contentType: false,
+                processData: false,
+                success: function (d) {
+                    $("#uploadPanelFile").addClass('alert-success').html('<stron> Success!!<a href="' + d + '"> Open File </a>').show();
+                    $("#file1").val(null);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert("Pleaser try again...");
+                    alert(xhr.status);
+                    alert(thrownError);
+                }
+            })
+        })
+    })
+</script>
+
+-----------------------------------------------------------------------------------------------
+Get List of customer Order 
+
+http://182.18.157.79/medv/api/order/getCustOrd
+[HttpGet]
+Param : custId int
+
+it will return List of 
+ ListOf { Order_Id 
+               OrderDate
+               invCount
+            }
+------------------------------------------------------------------------------------------------
+View Selected Order
+http://182.18.157.79/medv/api/order/w/viewSelectedOrder?orderId=2473
+[HttpGet]
+Param : orderId int
+
+Return 
+
+{
+    "liOrdDtls": [
+        {
+            "OrderDtls_Id": 3079,
+            "Order_Id": 0,
+            "MedicineId": 0,
+            "MedicineName": "Sumadic CX(Tablet , Chlorzoxazone)",
+            "Order_Qty": 1,
+            "Order_UoM": ""
+        },
+        {
+            "OrderDtls_Id": 3080,
+            "Order_Id": 0,
+            "MedicineId": 0,
+            "MedicineName": "Calcirich (250mg+125iu)(Tablet , Vitamin D3 )",
+            "Order_Qty": 1,
+            "Order_UoM": ""
+        }
+    ],
+    "liPrescriptions": [
+        {
+            "Prescription": "iefese.jpg"
+        },{
+            "Prescription": "psfulnks.jpg"
+        },{
+            "Prescription": "sgwrfhd.jpg"
+        }],
+    "Order_Id": 2473,
+    "Customer_Id": 4056,
+    "Customer_fName": "remote server",
+    "Customer_mName": " Middle Name",
+    "Customer_lName": "last Name",
+    "OrderDate": "2020-05-05T11:09:41.76",
+    "OrderComment": "Medicenes",
+    "invCount": 0,
+    "billNo": null,
+    "OrderStatus": 20,
+    "Address_Id": 3236,
+    "AddressLabel": "work",
+    "Address": "angels",
+    "mobNo": null,
+    "GEOlat": 0.0,
+    "GEOlng": 0.0,
+    "LandMark": null,
+    "PrimaryMobNo": null,
+    "contactMobNo": null,
+    "contactNo": null
+}
+
+Note :  in "liOrdDtls":  need not use "Order_Id", and "MedicineId"  also "GEOlat" and  "GEOlng" also need not to show
+Image Names will show as hyper link, on click of this will open in a popup / div
+ 
