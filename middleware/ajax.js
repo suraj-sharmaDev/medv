@@ -1,14 +1,17 @@
+//when you get new data check if the data was already added into cart
+//to reduce confusion
 const search = async (searchField='medi') => {
 	var expression = new RegExp(searchField, "i");
     var url = 'http://182.18.157.79/medv/api/drug/serDrug?drugName=' + searchField;
     const response = await fetch(url);
     const result = await response.json();
+	const localState = _localStorage.retrieveCart();    
   	if(result.length==0){
   		var returnData = '<li class="list-group-item"><span>No Data Found</span></li>';
   	}else{
 	    var returnData = result.map((value, index)=>{
 	    	if(value.SearchResult.search(expression) != -1){
-		    	 var elements = '<li class="list-group-item"><div class="row"><div class="col-md-2" style="position:relative">';
+		    	 var elements = '<li class="list-group-item"><form><div class="row"><div class="col-md-2" style="position:relative">';
 		    	 if (value.Type == "Capsule/Tablet") {
 		    	     elements += '<img src="svg/003-drugs.svg" style="top:unset; width:65px">';
 		    	 } else if (value.Type == "Drops") {
@@ -38,6 +41,7 @@ const search = async (searchField='medi') => {
 		    	 } else if (value.Type == "Ointment") {
 		    	     elements += '<img src="svg/017-ointment.svg" style="top:unset; width:65px">';
 		    	 }
+		    	 //the addtocart button should be replaced when already added
 		    	 elements += '</div><div class="col-md-6"><a href="#">' 
 		    	 			+ value.SearchResult 
 		    	 			+ '</a><br><span>' 
@@ -47,10 +51,16 @@ const search = async (searchField='medi') => {
 		    	 			+'<input type="hidden" name="detail" id="detail"  value="' + value.DrugDtls + '">'
 		    	 			+'<input type="hidden" name="id" id="id"  value="' + value.Id + '">'
 		    	 			+'<input type="hidden" name="type" id="type"  value="' + value.Type + '">'
-		    	 			+'<input type="number" name="qty" min="1" max="10" value="1" style="width:40%;height:20px;" id="qty" class="child" >'
-		    	 			+'</div><div class="col-md-2" style="position:relative">'
-		    	 			+'<input id="cart1" class="btn btn-info ml-2 child add_to_cart" type="button" name="addcart" value="Add to cart" style="width:75%;height:23px;padding:0;padding-top:2px; font-size:12px;color:#fff;"/>'
-		    	 			+'</div></div></li>';
+		    	 			+'<input type="number" name="qty" min="1" max="10" value="1" style="width:40%;height:20px;" id="qty" class="child inc_dec_btn" >'
+		    	 			+'</div><div class="col-md-2" style="position:relative">';
+		    	 if(localState[value.Id]==undefined){
+		    	 	//the item was not added
+		    	 	elements += '<input id="cart1" class="btn btn-info ml-2 child add_to_cart" type="button" name="addcart" value="Add to cart" style="width:75%;height:23px;padding:0;padding-top:2px; font-size:12px;color:#fff;"/>'
+		    	 			    +'</div></div></form></li>';
+		    	 }else{
+		    	 	elements += '<input id="cart1" class="btn btn-info ml-2 child add_to_cart" type="button" name="addcart" value="Added" style="width:75%;height:23px;padding:0;padding-top:2px; font-size:12px;color:#fff;"/>'
+		    	 			    +'</div></div></form></li>';
+		    	 }
 		    	 return elements;
 	    	}
 	    })

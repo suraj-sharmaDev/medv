@@ -335,45 +335,29 @@ input[type=number] {
       </li>
       <li class="nav-item" style="
     line-height: 77px;"><a class="btn btn-medv my-2 my-sm-0" href="upload.php">Upload Prescription</a></li>
-      <?php
-      if(empty($_SESSION['cart'])){
-        ?>
-        <li class="nav-item ml-5 "  style="position: relative">
-        <a href="" class="nav-link disabled" ><img src="<?php echo $URL;?>/images/cart.png" style="position: fixed"> <span id="cart-count" class="cartct">0</span></a></li>
-        <?php
-      }
-     
-      else{
-      ?>
-          <li class="nav-item ml-5 dropdown "  style="position: relative">
-        <a href="#" class="nav-link" id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'><img src="<?php echo $URL;?>/images/cart.png" style="position: fixed"> <span id="cart-count" class="cartct"><?php echo count($_SESSION['cart']); ?></span></a>
-          <ul class='dropdown-menu cartdrop' aria-labelledby='navbarDropdown'>
-          <li class="dropdown-item"><span>Order Summary</span><span class="cart_summ_ct" style="padding-left: 94px"><?php echo count($_SESSION['cart']); ?></span><span> item(s)</span></li>
-          <li class='dropdown-divider'></li>
-          <li class='dropdown-item pt-2 pb-2 cart-items-list'>
-            <?php
-            if(isset($_SESSION['cart'])){
-
-             
-              foreach ($_SESSION['cart'] as $item_id =>$val) {
-                $product=$val['product'];
-                $quantity=$val['quantity'];
-                $type=$val['type'];
-                echo "<div class='row' style='font-size:12px'><div class='col-md-8'>$product</div><div class='col-md-4'>Qty: $quantity</div></div>"; 
-              }
-             
-
-              }else{
-              echo "cart is empty";
-              }
-              ?>
-            </li>
-          
-          <li class='dropdown-item pt-2'><a href="<?php echo $URL;?>/viewcart" class="btn">PROCEED TO CART</a></li>
-        </ul>
+    <!-- changed the dependency from backend session to localstorage start-->
+    <div id="cart_added">
+      <li class="nav-item ml-5 dropdown "  style="position: relative">
+        <a href="#" class="nav-link" id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+          <img src="<?php echo $URL;?>/images/cart.png" style="position: fixed"> 
+          <span id="cart-count" class="cartct">
+          </span>
+        </a>
+        <ul class='dropdown-menu cartdrop' aria-labelledby='navbarDropdown'>
+        <li class="dropdown-item">
+          <span>Order Summary</span>
+          <span class="cart_summ_ct" id="cart_summ_ct" style="padding-left: 94px">
+            </span>
+            <span> item(s)</span>
         </li>
-      <?php } ?>
-      
+        <li class='dropdown-divider'></li>
+        <li class='dropdown-item pt-2 pb-2 cart-items-list' id="cart-items-list">
+        </li>  
+        <li class='dropdown-item pt-2'><a href="<?php echo $URL;?>/viewcart" class="btn">PROCEED TO CART</a></li>
+        </ul>
+      </li>      
+    </div>
+    <!-- End of changed code -->
       <li class="nav-item ml-5" >
         <?php
         if($custid!=" "){
@@ -417,7 +401,7 @@ input[type=number] {
 </nav>
 </div>
  <script type="text/javascript">
- 
+  changeContentInCart();  //call regenerator script after page loads
    /* var globalTimeout = null; */
  /*function clicksearch(){
     var searchField = $('#search').val();
@@ -457,7 +441,6 @@ searchField.addEventListener('keyup', function (e){
           search(searchField)
           .then((result)=>{
             $('#result').append(result);
-            console.log(result)
           })
           .catch((err)=>{
             console.log(err)
@@ -471,14 +454,15 @@ searchField.addEventListener('keyup', function (e){
 //when clicked search button
  $('#srcBtn').click(()=>{
   $('#result').hide('slow');
-  clearTimeout(timeout);
-  if($('#search').val().length >=3 ){
-    $('#result').show('slow');
+  // clearTimeout(timeout);
+  if($('#search').val().length >= 3 ){
     $('#result').html('');    
-    search($('#search').val())
+    _searchVal = $('#search').val();
+    // _searchVal = 'medi';
+    search(_searchVal)
     .then((result)=>{
       $('#result').append(result);
-      console.log(result);
+      $('#result').show('slow');      
     })
     .catch((err)=>{
       console.log(err)
@@ -492,26 +476,29 @@ searchField.addEventListener('keyup', function (e){
     });
   })
   
-    // $(document).on('click','.add_to_cart',function(e){
-    //   e.preventDefault();
-    //   var $this = $(this);
-    //   var url = $(this).parents('form').attr('action');
-    //   //alert(url);
-    //   $.ajax({
-    //     url: url,
-    //     type: 'post',
-    //     dataType: 'json',
-    //     data: $(this).parents("form").serialize(),
-    //     success: function(resp) {
-    //         console.log(resp);
-    //         $('.cartct').text(resp.count);
-    //         $('.cart_summ_ct').text(resp.count);
-    //         $('.cart-items-list').append("<div class='row' style='font-size:12px'><div class='col-md-8'>"+resp.productname+"</div><div class='col-md-4'>Qty: "+resp.qty+"</div></div>");
-    //     }
-    //   })
-    // //   $.get(url,{},function(){});
-    // })
-  
+    $(document).on('click','.add_to_cart',function(e){
+      //main focus will be to convert serialized data to json for local storage
+      e.preventDefault();
+      var $this = $(this);
+      //replace %20 and %2C with space and ,
+      var cartValue = {};
+      var sanitized = $(this).parents('form').serialize().replace(/%20/g, " ").replace(/%2C/g,',').replace(/%2F/g, '/');
+      var data = sanitized.split('&');
+      data.map((val, index)=>{
+        //forma , key=value
+        _split = val.split('=');
+        _key = _split[0].trim();
+        _val = _split[1].trim();
+        cartValue[_key] = _val;
+      })
+      //add the result to localstorage cart
+      _localStorage.addCart(cartValue);
+      $(this).attr('value', 'Added');
+      //simultaneously change the content in cart
+      changeContentInCart();
+      console.log(_localStorage.state);
+    })
+
 </script>
 <?php
 if(isset($_POST['searchall'])){
