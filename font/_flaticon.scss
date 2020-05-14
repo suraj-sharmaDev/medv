@@ -1,0 +1,92 @@
+    /*
+    Flaticon icon font: Flaticon
+    Creation date: 19/02/2020 10:47
+    */
+
+    @font-face {
+  font-family: "Flaticon";
+  src: url("./Flaticon.eot");
+  src: url("./Flaticon.eot?#iefix") format("embedded-opentype"),
+       url("./Flaticon.woff2") format("woff2"),
+       url("./Flaticon.woff") format("woff"),
+       url("./Flaticon.ttf") format("truetype"),
+       url("./Flaticon.svg#Flaticon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "Flaticon";
+    src: url("./Flaticon.svg#Flaticon") format("svg");
+  }
+}
+
+    .fi:before{
+        display: inline-block;
+  font-family: "Flaticon";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  line-height: 1;
+  text-decoration: inherit;
+  text-rendering: optimizeLegibility;
+  text-transform: none;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+    }
+
+    .flaticon-drug:before { content: "\f100"; }
+.flaticon-drug-1:before { content: "\f101"; }
+.flaticon-medicine-1:before { content: "\f102"; }
+.flaticon-drug-2:before { content: "\f103"; }
+.flaticon-vaccine:before { content: "\f104"; }
+.flaticon-pharmacy:before { content: "\f105"; }
+.flaticon-nasal-spray:before { content: "\f106"; }
+.flaticon-drug-3:before { content: "\f107"; }
+.flaticon-pharmacy-1:before { content: "\f108"; }
+.flaticon-spray:before { content: "\f109"; }
+.flaticon-healthcare-and-medical:before { content: "\f10a"; }
+.flaticon-medicine-2:before { content: "\f10b"; }
+.flaticon-blood-transfusion:before { content: "\f10c"; }
+.flaticon-nasal-spray-1:before { content: "\f10d"; }
+.flaticon-ointment:before { content: "\f10e"; }
+.flaticon-dermatology:before { content: "\f10f"; }
+.flaticon-ointment-1:before { content: "\f110"; }
+.flaticon-pill:before { content: "\f111"; }
+.flaticon-drug-4:before { content: "\f112"; }
+.flaticon-syrup:before { content: "\f113"; }
+.flaticon-medicine:before { content: "\f114"; }
+.flaticon-sachet:before { content: "\f115"; }
+.flaticon-drop:before { content: "\f116"; }
+.flaticon-potion:before { content: "\f117"; }
+.flaticon-hair:before { content: "\f118"; }
+.flaticon-blood:before { content: "\f119"; }
+    
+    $font-Flaticon-drug: "\f100";
+    $font-Flaticon-drug-1: "\f101";
+    $font-Flaticon-medicine-1: "\f102";
+    $font-Flaticon-drug-2: "\f103";
+    $font-Flaticon-vaccine: "\f104";
+    $font-Flaticon-pharmacy: "\f105";
+    $font-Flaticon-nasal-spray: "\f106";
+    $font-Flaticon-drug-3: "\f107";
+    $font-Flaticon-pharmacy-1: "\f108";
+    $font-Flaticon-spray: "\f109";
+    $font-Flaticon-healthcare-and-medical: "\f10a";
+    $font-Flaticon-medicine-2: "\f10b";
+    $font-Flaticon-blood-transfusion: "\f10c";
+    $font-Flaticon-nasal-spray-1: "\f10d";
+    $font-Flaticon-ointment: "\f10e";
+    $font-Flaticon-dermatology: "\f10f";
+    $font-Flaticon-ointment-1: "\f110";
+    $font-Flaticon-pill: "\f111";
+    $font-Flaticon-drug-4: "\f112";
+    $font-Flaticon-syrup: "\f113";
+    $font-Flaticon-medicine: "\f114";
+    $font-Flaticon-sachet: "\f115";
+    $font-Flaticon-drop: "\f116";
+    $font-Flaticon-potion: "\f117";
+    $font-Flaticon-hair: "\f118";
+    $font-Flaticon-blood: "\f119";
