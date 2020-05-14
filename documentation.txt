@@ -10,3 +10,9 @@ RDP IP ADDRESS : 182.18.157.79:33893
 Username  : Administrator
 Password   :  -xMSas*3ryg#w7
 Hostname  : Ingex_C06791
+
+How it was solved!
+----------------
+
+- changed the server session to localstorage
+- put constants.php containig the baseurl for js counterpart baseurl is in ajax.js

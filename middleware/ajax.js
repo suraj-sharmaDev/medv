@@ -4,6 +4,7 @@ const search = async (searchField='medi') => {
 	var expression = new RegExp(searchField, "i");
     var url = 'http://182.18.157.79/medv/api/drug/serDrug?drugName=' + searchField;
     const response = await fetch(url);
+    const baseUrl = 'http://localhost/medv/';
     const result = await response.json();
 	const localState = _localStorage.retrieveCart();    
   	if(result.length==0){
@@ -13,33 +14,33 @@ const search = async (searchField='medi') => {
 	    	if(value.SearchResult.search(expression) != -1){
 		    	 var elements = '<li class="list-group-item"><form><div class="row"><div class="col-md-2" style="position:relative">';
 		    	 if (value.Type == "Capsule/Tablet") {
-		    	     elements += '<img src="svg/003-drugs.svg" style="top:unset; width:65px">';
+		    	     elements += '<img src="'+baseUrl+'svg/003-drugs.svg" style="top:unset; width:65px">';
 		    	 } else if (value.Type == "Drops") {
-		    	     elements += '<img src="svg/013-eye-drops.svg" style="top:unset; width:65px">';
+		    	     elements += '<img src="'+baseUrl+'svg/013-eye-drops.svg" style="top:unset; width:65px">';
 		    	 } else if (value.Type == "Suspension") {
-		    	     elements += '<img src="svg/011-medicine-2.svg" style="top:unset; width:65px">';
+		    	     elements += '<img src="'+baseUrl+'svg/011-medicine-2.svg" style="top:unset; width:65px">';
 		    	 } else if (value.Type == "Injection") {
-		    	     elements += '<img src="svg/007-vaccine.svg" style="top:unset; width:65px">';
+		    	     elements += '<img src="'+baseUrl+'svg/007-vaccine.svg" style="top:unset; width:65px">';
 		    	 } else if (value.Type == "Syrup") {
-		    	     elements += '<img src="svg/020-syrup.svg" style="top:unset; width:65px">';
+		    	     elements += '<img src="'+baseUrl+'svg/020-syrup.svg" style="top:unset; width:65px">';
 		    	 } else if (value.Type == "Capsule") {
-		    	     elements += '<img src="svg/001-pills.svg" style="top:unset; width:65px">';
+		    	     elements += '<img src="'+baseUrl+'svg/001-pills.svg" style="top:unset; width:65px">';
 		    	 } else if (value.Type == "Tablet") {
-		    	     elements += '<img src="svg/006-drug-1.svg" style="top:unset; width:65px">';
+		    	     elements += '<img src="'+baseUrl+'svg/006-drug-1.svg" style="top:unset; width:65px">';
 		    	 } else if (value.Type == "Cream") {
-		    	     elements += '<img src="svg/005-moisturizer.svg" style="top:unset; width:65px">';
+		    	     elements += '<img src="'+baseUrl+'svg/005-moisturizer.svg" style="top:unset; width:65px">';
 		    	 } else if (value.Type == "Lotion") {
-		    	     elements += '<img src="svg/019-cosmetics.svg" style="top:unset; width:65px">';
+		    	     elements += '<img src="'+baseUrl+'svg/019-cosmetics.svg" style="top:unset; width:65px">';
 		    	 } else if (value.Type == "Other") {
-		    	     elements += '<img src="svg/008-doctor.svg" style="top:unset; width:65px">';
+		    	     elements += '<img src="'+baseUrl+'svg/008-doctor.svg" style="top:unset; width:65px">';
 		    	 } else if (value.Type == "gel") {
-		    	     elements += '<img src="svg/001-gel.svg" style="top:unset; width:65px">';
+		    	     elements += '<img src="'+baseUrl+'svg/001-gel.svg" style="top:unset; width:65px">';
 		    	 } else if (value.Type == "Solution") {
 		    	     elements += '<span class="flaticon-potion" style="font-size:40px; vertical-align:text-top"></span>';
 		    	 } else if (value.Type == "Liquid") {
-		    	     elements += '<img src="svg/004-patient.svg" style="top:unset; width:65px">';
+		    	     elements += '<img src="'+baseUrl+'svg/004-patient.svg" style="top:unset; width:65px">';
 		    	 } else if (value.Type == "Ointment") {
-		    	     elements += '<img src="svg/017-ointment.svg" style="top:unset; width:65px">';
+		    	     elements += '<img src="'+baseUrl+'svg/017-ointment.svg" style="top:unset; width:65px">';
 		    	 }
 		    	 //the addtocart button should be replaced when already added
 		    	 elements += '</div><div class="col-md-6"><a href="#">' 

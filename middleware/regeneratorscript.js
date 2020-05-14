@@ -3,6 +3,8 @@
 
 //the basic idea is to check the change in localstorage
 _previousVal = _localStorage.state;
+
+//this function affects the header.php
 function changeContentInCart(){
 	cartCount = document.getElementById('cart-count'); //the  badge 
 	cartSummCt = document.getElementById('cart_summ_ct');
@@ -20,4 +22,9 @@ function changeContentInCart(){
 					  +_localStorage.state[key]['qty']+"</div></div>";
 	}
 	cartItemsList.innerHTML = _medicines;
+}
+
+//this affects index.php in viewcart folder
+function changeContentInView(){
+	
 }
