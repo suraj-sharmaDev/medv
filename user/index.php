@@ -189,23 +189,24 @@ require_once(__ROOT__.'/curl_helper.php');
 $action = "POST";
 $url = 'http://182.18.157.79/medv/api/customer/w/CustLogin';
 $parameters = array("username" => $username,"pwd" => $pwd);
-print_r($parameters)
-// //create a new cURL resource
-// $parameters = json_encode(array());
-//     $result = CurlHelper::perform_http_request($action, $url, $parameters);
+//create a new cURL resource
 
-//     if($result == -1){
-//          echo "<script>
-//             alert('User Not Exist');
-//                window.location='../user';
-//                </script>";
-//     }
-//     else{
-//       echo "<script>
-//             alert('Logged In Successfully $result');
-//             window.location='../';
-//       </script>";
-//       $_SESSION['custid']=$result;
-//     }
+$parameters = json_encode(array());
+$result = CurlHelper::perform_http_request($action, $url, $parameters);
+echo "<script>console.log(".$result.")</script>";
+// if($result == -1){
+//   echo "<script>
+//           alert('User Not Exist');
+//           window.location='../user';
+//         </script>";
 // }
-// ?>
+// else{
+//   echo "<script>
+//           alert('Logged In Successfully $result');
+//           window.location='../';
+//         </script>";
+//   $_SESSION['custid']=$result;
+// }
+
+}
+?>

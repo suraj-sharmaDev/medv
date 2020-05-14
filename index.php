@@ -7,11 +7,7 @@
  
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-  	
- 
-    <?php include 'include/cssplugin.php';?>
-</head>
+<?php include 'include/cssplugin.php';?>
 <body>
 	<?php include 'include/header.php';?>
 <section>

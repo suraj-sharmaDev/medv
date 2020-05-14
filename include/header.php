@@ -306,8 +306,8 @@ input[type=number] {
     text-indent: 0;
 }
 </style>
-
-
+</head>
+<body>
 <div class="container-fluid bg-white navigation shadow sticky-top">
 <nav class="navbar navbar-expand-lg navbar-light bg-white">
   <a class="navbar-brand" href="<?php echo $URL ?>/index.php"><img src="<?php echo $URL;?>/images/Logo.png" alt="logo" class="img-fluid" width="130"></a>
@@ -323,10 +323,13 @@ input[type=number] {
     <i class="glyphicon glyphicon-user"></i>
     <input type="text" class="form-control" />
 </div> -->
-        <form class="form-inline my-2 my-lg-0 nav-link inner-addon right-addon" method="post" >
+        <form class="form-inline my-2 my-lg-0 nav-link inner-addon right-addon" >
           <img src="<?php echo $URL;?>/images/search-button.png">
           <input class="form-control mr-sm-2" type="search" minlength="2" name="search" id="search" placeholder="Search for all your medical needs" aria-label="Search" autocomplete="off" required title="3 characters minimum">
-          <input type="submit" class="btn btn-search" name="searchall" value="Search">
+
+<!-- Use case on click of search button don't do anything than fetching the data inside dataset of drop down -->
+          <input type="button" class="btn btn-search" id="srcBtn" name="searchall" value="Search">
+
           <ul class="list-group" id="result" style="position: absolute;"></ul>
         </form>
       </li>
@@ -426,83 +429,7 @@ input[type=number] {
   }*/
   /*globalTimeout = setTimeout(function() {
     globalTimeout = null;*/
-    let search = document.getElementById('search');
-    let timeout = null; 
-search.addEventListener('keyup', function (e){
-  clearTimeout(timeout);
-  if ($(this).val().length >= 3) {
-    timeout = setTimeout(function () {
-          $('#result').show('slow');
-          $('#result').html('');
-          var searchField = $('#search').val();
-          var expression = new RegExp(searchField, "i");
-          var url = 'http://182.18.157.79/medv/api/drug/serDrug?drugName=' + searchField;
-        $.getJSON(url,function(data){
-          console.log(data);
-          $.each(data, function(key,value){
-            if(value.SearchResult.search(expression) != -1){
-              var elements = '<li class="list-group-item"><form id="cart_item_form" action="<?php echo $URL ?>/ajax/add_to_cart.php" method="post"><div class="row"><div class="col-md-2" style="position:relative">';
-                if(value.Type == "Capsule/Tablet") {    
-                  elements +='<img src="<?php echo $URL;?>/svg/003-drugs.svg" style="top:unset; width:65px">';
-                }
-                else if(value.Type == "Drops"){
-                  elements +='<img src="<?php echo $URL;?>/svg/013-eye-drops.svg" style="top:unset; width:65px">';
-                }
-                else if(value.Type == "Suspension"){
-                  elements +='<img src="<?php echo $URL;?>/svg/011-medicine-2.svg" style="top:unset; width:65px">';
-                }
-                else if(value.Type == "Injection"){
-                  elements +='<img src="<?php echo $URL;?>/svg/007-vaccine.svg" style="top:unset; width:65px">';
-                }
-                else if(value.Type == "Syrup"){
-                  elements +='<img src="<?php echo $URL;?>/svg/020-syrup.svg" style="top:unset; width:65px">';
-                }
-                else if(value.Type == "Capsule"){
-                  elements +='<img src="<?php echo $URL;?>/svg/001-pills.svg" style="top:unset; width:65px">';
-                }
-                else if(value.Type == "Tablet"){
-                  elements +='<img src="<?php echo $URL;?>/svg/006-drug-1.svg" style="top:unset; width:65px">';
-                }
-                else if(value.Type == "Cream"){
-                  elements +='<img src="<?php echo $URL;?>/svg/005-moisturizer.svg" style="top:unset; width:65px">';
-                }
-                else if(value.Type == "Lotion"){
-                  elements +='<img src="<?php echo $URL;?>/svg/019-cosmetics.svg" style="top:unset; width:65px">';
-                }
-                else if(value.Type == "Other"){
-                  elements +='<img src="<?php echo $URL;?>/svg/008-doctor.svg" style="top:unset; width:65px">';
-                }
-                else if(value.Type == "gel"){
-                  elements +='<img src="<?php echo $URL;?>/svg/001-gel.svg" style="top:unset; width:65px">';
-                }
-                else if(value.Type == "Solution"){
-                  elements +='<span class="flaticon-potion" style="font-size:40px; vertical-align:text-top"></span>';
-                }
-                else if(value.Type == "Liquid"){
-                  elements +='<img src="<?php echo $URL;?>/svg/004-patient.svg" style="top:unset; width:65px">';
-                }
-                else if(value.Type == "Ointment"){
-                  elements +='<img src="<?php echo $URL;?>/svg/017-ointment.svg" style="top:unset; width:65px">';
-                }
-                elements += '</div><div class="col-md-6"><a href="#">'+value.SearchResult+'</a><br><span>'+value.DrugDtls+'</span></div><div class="col-md-2" style="position:relative"><input type="hidden" name="dname" id="dname"  value="'+value.SearchResult+'"><input type="hidden" name="detail" id="detail"  value="'+value.DrugDtls+'"><input type="hidden" name="id" id="id"  value="'+value.Id+'"><input type="hidden" name="type" id="type"  value="'+value.Type+'"><input type="number" name="qty" min="1" max="10" value="1" style="width:40%;height:20px;" id="qty" class="child" ></div><div class="col-md-2" style="position:relative"><input id="cart1" class="btn btn-info ml-2 child add_to_cart" type="button" name="addcart" value="Add to cart" style="width:75%;height:23px;padding:0;padding-top:2px; font-size:12px;color:#fff;"/></div></div></form></li>';
 
-
-
-                $('#result').append(elements);
-
-              /*<a href="add_cart.php?id='+value.Id+'&&dname='+value.SearchResult+'" class="btn btn-info ml-2 child" id="cart1" style="width:75%;height:23px;padding:0;padding-top:2px; font-size:12px;color:#fff;">Add to Cart</a>*/
-            }
-            else{
-              $('#result').append('<li class="list-group-item"><span>No Data Found</span></li>')
-            }
-          })
-        });
-       }, 1000);
-  }
-  else{
-    $('#result').hide('slow');
-  }
-});
     // $("html").click(function() {
     //   $("#result").hide();
     //   // $("#mycart").hide();
@@ -516,36 +443,74 @@ search.addEventListener('keyup', function (e){
             $('#result').hide();
         }
     });
-    
-    
-    
-    
 });
+let searchField = document.getElementById('search');
+timeout = null;   
+//when typing
+searchField.addEventListener('keyup', function (e){
+  clearTimeout(timeout);
+  if ($(this).val().length >= 3) {
+    timeout = setTimeout(function () {
+          $('#result').show('slow');
+          $('#result').html('');
+          var searchField = $('#search').val();
+          search(searchField)
+          .then((result)=>{
+            $('#result').append(result);
+            console.log(result)
+          })
+          .catch((err)=>{
+            console.log(err)
+          })
+       }, 1000);
+  }
+  else{
+    $('#result').hide('slow');
+  }
+});
+//when clicked search button
+ $('#srcBtn').click(()=>{
+  $('#result').hide('slow');
+  clearTimeout(timeout);
+  if($('#search').val().length >=3 ){
+    $('#result').show('slow');
+    $('#result').html('');    
+    search($('#search').val())
+    .then((result)=>{
+      $('#result').append(result);
+      console.log(result);
+    })
+    .catch((err)=>{
+      console.log(err)
+    })    
+  }
+ });
+
  $('#cart1').click(function(){
     $('#navbarDropdown').click(function(){
       $('.cartdrop').show('fade');
     });
   })
   
-    $(document).on('click','.add_to_cart',function(e){
-      e.preventDefault();
-      var $this = $(this);
-      var url = $(this).parents('form').attr('action');
-      //alert(url);
-      $.ajax({
-        url: url,
-        type: 'post',
-        dataType: 'json',
-        data: $(this).parents("form").serialize(),
-        success: function(resp) {
-            console.log(resp);
-            $('.cartct').text(resp.count);
-            $('.cart_summ_ct').text(resp.count);
-            $('.cart-items-list').append("<div class='row' style='font-size:12px'><div class='col-md-8'>"+resp.productname+"</div><div class='col-md-4'>Qty: "+resp.qty+"</div></div>");
-        }
-      })
-    //   $.get(url,{},function(){});
-    })
+    // $(document).on('click','.add_to_cart',function(e){
+    //   e.preventDefault();
+    //   var $this = $(this);
+    //   var url = $(this).parents('form').attr('action');
+    //   //alert(url);
+    //   $.ajax({
+    //     url: url,
+    //     type: 'post',
+    //     dataType: 'json',
+    //     data: $(this).parents("form").serialize(),
+    //     success: function(resp) {
+    //         console.log(resp);
+    //         $('.cartct').text(resp.count);
+    //         $('.cart_summ_ct').text(resp.count);
+    //         $('.cart-items-list').append("<div class='row' style='font-size:12px'><div class='col-md-8'>"+resp.productname+"</div><div class='col-md-4'>Qty: "+resp.qty+"</div></div>");
+    //     }
+    //   })
+    // //   $.get(url,{},function(){});
+    // })
   
 </script>
 <?php

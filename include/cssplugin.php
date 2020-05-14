@@ -1,5 +1,6 @@
 
  <?php require_once('constants.php');?>
+ <head>
  <title>MedV</title>
  <meta charset="utf-8">
  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -15,3 +16,4 @@
 <link rel="stylesheet" type="text/css" href="<?php echo $URL;?>/include/logstyle.css">
 <link rel="icon" href="<?php echo $URL;?>/images/loader.png">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.css">
+<script type="text/javascript" src="middleware/ajax.js"></script>
