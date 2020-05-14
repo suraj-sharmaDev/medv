@@ -191,64 +191,19 @@ input[type="file"] {
   
 <section class="mt-5 mb-5 ">
   <div class="container shadow  mb-5 bg-white rounded" style="padding: 15px 30px">
-    <h3 style="color: #000; font-size: 1.5rem;"><b style="color:#004a8e;padding-right:5px"><?php echo count($_SESSION['cart']); ?></b> items in cart</h3>
+    <h3 style="color: #000; font-size: 1.5rem;">
+      <span style="color:#004a8e;padding-right:5px" id="cart-count-div"></span> 
+      items in cart
+    </h3>
   </div>
   <div class="container">
     <div class="row">
       <div class="col-md-8">
-        
-        <?php
-
-         foreach ($_SESSION['cart'] as $item_id =>$val) {
-                $product=$val['product'];
-                $quantity=$val['quantity'];
-
-                echo "<div class='shadow p-3 mb-3 bg-white rounded'><form class='inner-addon' method='post' action='remove.php'><div class='row'><div class='col-md-2' style='position:relative'>";
-                if( $val['type'] == "Capsule/Tablet") {    
-                  echo '<img src="../svg/003-drugs.svg" style="top:unset; width:65px">';
-                }
-                else if($val['type'] == "Drops"){
-                  echo '<img src="../svg/013-eye-drops.svg" style="top:unset; width:65px">';
-                }
-                else if($val['type'] == "Suspension"){
-                  echo '<img src="../svg/011-medicine-2.svg" style="top:unset; width:65px">';
-                }
-                else if($val['type'] == "Injection"){
-                  echo '<img src="../svg/007-vaccine.svg" style="top:unset; width:65px">';
-                }
-                else if($val['type'] == "Syrup"){
-                  echo '<img src="../svg/020-syrup.svg" style="top:unset; width:65px">';
-                }
-                else if($val['type'] == "Capsule"){
-                  echo '<img src="../svg/001-pills.svg" style="top:unset; width:65px">';
-                }
-                else if($val['type'] == "Tablet"){
-                  echo '<img src="../svg/006-drug-1.svg" style="top:unset; width:65px">';
-                }
-                else if($val['type'] == "Cream"){
-                  echo '<img src="../svg/005-moisturizer.svg" style="top:unset; width:65px">';
-                }
-                else if($val['type'] == "Lotion"){
-                  echo '<img src="../svg/019-cosmetics.svg" style="top:unset; width:65px">';
-                }
-                else if($val['type'] == "Other"){
-                  echo '<img src="../svg/008-doctor.svg" style="top:unset; width:65px">';
-                }
-                else if($val['type'] == "gel"){
-                  echo '<img src="../svg/001-gel.svg" style="top:unset; width:65px">';
-                }
-                else if($val['type'] == "Solution"){
-                  echo '<span class="flaticon-potion" style="font-size:40px; vertical-align:text-top"></span>';
-                }
-                else if($val['type'] == "Liquid"){
-                  echo '<img src="../svg/004-patient.svg" style="top:unset; width:65px">';
-                }
-                else if($val['type'] == "Ointment"){
-                  echo '<img src="../svg/017-ointment.svg" style="top:unset; width:65px">';
-                }
-                echo "</div><div class='col-md-6'><a href='#'>$product</a><br><span style='font-size:13px'>$val[drugDtls]</span></div><div class='col-md-2' style='position:relative'><input type='hidden' name='dname' id='dname'  value='$val[product]'><input type='hidden' name='id' id='id'  value='$val[item_id]' class='item_id'><input type='hidden' value='$item_id' class='arr_index'><span class='quant'>Qty:</span><input type='number' value='$quantity' name='qty' min='1' max='10' style='width:63%;height:30px;' id='qty' class='child qty' ></div><div class='col-md-2' style='position:relative'><button type='submit' class='btn ml-2 child' id='cart1' name='remove'   style='width:75%;height:35px;padding:0; font-size:14px;background-color:#004a8e;color:#24d5e1' ><i class='fa fa-trash text-danger' aria-hidden='true'></i> Remove</button></div></div></form></div>";
-              }
-              ?>
+        <!-- Changes made to remove dependency to backend session -->
+        <div id="cart-div-view">
+          
+        </div>
+        <!-- end of made changes -->
       </div>
       <div class="col-md-4 text-center">
         <form enctype="multipart/form-data" method="post" >
@@ -545,6 +500,17 @@ input[type=number] {
 <script src="https://code.jquery.com/jquery-migrate-1.4.1.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
 <script type="text/javascript">
+  //Initialization for the page
+  changeContentInView();
+
+  //function call to remove the medicine from localstorage
+  function remove_med(key){
+    _localStorage.removeFromCart(key);
+    changeContentInView();
+    //clean the header field too
+    changeContentInCart();
+  }
+  //call to regeneratorscript
   $('#inline-popups').magnificPopup({
   delegate: 'a',
   removalDelay: 500, //delay removal by X to allow out-animation
