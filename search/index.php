@@ -109,7 +109,7 @@ input[type=number] {
 <?php  include '../include/footer.php';?>
 </body>
 <?php include '../include/jsplugin.php';?>
-<script src="http://fast.wistia.net/labs/fresh-url/v1.js" async></script>
+<script src="https://fast.wistia.net/labs/fresh-url/v1.js" async></script>
 <script src="https://code.jquery.com/jquery-migrate-1.4.1.min.js"></script>
 <script type="text/javascript">
    $(window).on('load', function() {

@@ -130,7 +130,7 @@ input[type=number] {
 <?php  include '../include/footer.php';?>
 </body>
 <?php include '../include/jsplugin.php';?>
-<script src="http://fast.wistia.net/labs/fresh-url/v1.js" async></script>
+<script src="https://fast.wistia.net/labs/fresh-url/v1.js" async></script>
 
 </html>
 <?php
