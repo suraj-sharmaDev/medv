@@ -4,7 +4,7 @@ const search = async (searchField='medi') => {
 	var expression = new RegExp(searchField, "i");
     var url = 'http://182.18.157.79/medv/api/drug/serDrug?drugName=' + searchField;
     const response = await fetch(url);
-    const baseUrl = 'http://www.medv.crypt4bits.com/';
+    const baseUrl = 'https://www.medv.crypt4bits.com/';
     // const baseUrl = 'http://localhost/medv/';
     const result = await response.json();
 	const localState = _localStorage.retrieveCart();    
