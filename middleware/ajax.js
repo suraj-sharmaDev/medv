@@ -6,11 +6,16 @@ const search = async (searchField='medi') => {
 
 	var expression = new RegExp(searchField, "i");
     var url = 'http://182.18.157.79/medv/api/drug/serDrug?drugName=' + searchField;
+    //This code was added to provide proxy for access http site from https
     var proxyUrl = baseUrl+'ajax/proxy_site.php';
-    // const response = await fetch(url,{
-    // 	method : 'POST',
-    	
-    // });
+    var formData = new FormData();
+    formData.append('action', 'GET');
+    formData.append('url', url);
+    const response = await fetch(proxyUrl,{
+    	method : 'POST',
+		body : formData
+    });
+
     const result = await response.json();
 	const localState = _localStorage.retrieveCart();    
   	if(result.length==0){
