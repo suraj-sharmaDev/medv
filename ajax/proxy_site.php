@@ -1,6 +1,6 @@
 <?php
 require_once('../include/curl_helper.php');
-
+header("Access-Control-Allow-Origin: *");
 $action = $_POST['action'];
 $url = $_POST['url'];
 $parameters = $_POST['parameters'];
