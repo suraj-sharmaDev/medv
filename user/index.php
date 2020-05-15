@@ -181,35 +181,45 @@ $uid=base64_encode($userid);
     }
 }
 ?>
+
 <?php
+//login checker implemented on proxy for bypassing http
 if(isset($_POST['submit'])){
+
 $username=$_POST['user'];
 $pwd=$_POST['password'];
+
 require_once(__ROOT__.'/curl_helper.php');
 
-// $url = 'http://182.18.157.79/medv/api/customer/w/CustLogin?userName='.$username.'&pwd='.$pwd;
-// //create a new cURL resource
-// $parameters = json_encode(array());
-
+$proxyUrl = $URL.'/ajax/proxy_site.php';
 $action = "POST";
 $url = 'http://182.18.157.79/medv/api/customer/w/CustLogin';
-$parameters = json_encode(array("username" => $username,"pwd" => $pwd));
+$parameters = array(
+  "action" => "POST",
+  "url" => $url,
+  "headers" => "Content-Type: application/json",
+  "data" => json_encode(array("userName" => $username, "pwd" => $pwd))
+);
 //create a new cURL resource
-$result = CurlHelper::perform_http_request($action, $url, $parameters);
-echo "<script>console.log(".$result.")</script>";
-// if($result == -1){
-//   echo "<script>
-//           alert('User Not Exist');
-//           window.location='../user';
-//         </script>";
-// }
-// else{
-//   echo "<script>
-//           alert('Logged In Successfully $result');
-//           window.location='../';
-//         </script>";
-//   $_SESSION['custid']=$result;
-// }
+$result = CurlHelper::perform_http_request($action, $proxyUrl, $parameters);
+
+if($result == -1){
+  echo "<script>
+          alert('User Not Exist');
+          window.location='../user';
+        </script>";
+}
+else if(is_numeric($result)){
+  echo "<script>
+          alert('Logged In Successfully $result');
+          window.location='../';
+        </script>";
+  $_SESSION['custid']=$result;
+}else{
+  echo "<script>
+          alert('API Error')
+        </script>";  
+}
 
 }
 ?>
