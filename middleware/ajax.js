@@ -1,8 +1,8 @@
 //when you get new data check if the data was already added into cart
 //to reduce confusion
 const search = async (searchField='medi') => {
-    const baseUrl = 'https://www.medv.crypt4bits.com/';
-    // const baseUrl = 'http://localhost/medv/';
+    // const baseUrl = 'https://www.medv.crypt4bits.com/';
+    const baseUrl = 'http://localhost/medv/';
 
 	var expression = new RegExp(searchField, "i");
     var url = 'http://182.18.157.79/medv/api/drug/serDrug?drugName=' + searchField;
@@ -62,15 +62,17 @@ const search = async (searchField='medi') => {
 		    	 			+'<input type="hidden" name="dname" value="' + value.SearchResult + '">'
 		    	 			+'<input type="hidden" name="detail"  value="' + value.DrugDtls + '">'
 		    	 			+'<input type="hidden" name="id"  value="' + value.Id + '">'
-		    	 			+'<input type="hidden" name="type" value="' + value.Type + '">'
-		    	 			+'<input type="number" name="qty" min="1" max="10" value="1" style="width:40%;height:20px;" class="child inc_dec_btn" >'
-		    	 			+'</div><div class="col-md-2" style="position:relative">';
+		    	 			+'<input type="hidden" name="type" value="' + value.Type + '">';
 		    	 if(localState[value.Id]==undefined){
 		    	 	//the item was not added
-		    	 	elements += '<input class="btn btn-info ml-2 child add_to_cart" type="button" name="addcart" value="Add to cart" style="width:75%;height:23px;padding:0;padding-top:2px; font-size:12px;color:#fff;"/>'
-		    	 			    +'</div></div></form></li>';
+		    	 	elements += '<input type="number" name="qty" min="1" max="10" value="1" style="width:40%;height:20px;" class="child inc_dec_btn" >'
+		    	 				+'</div><div class="col-md-2" style="position:relative">'
+		    	 				+'<input class="btn btn-info ml-2 child add_to_cart" type="button" name="addcart" value="Add to cart" style="width:75%;height:23px;padding:0;padding-top:2px; font-size:12px;color:#fff;"/>'
+		    	 				+'</div></div></form></li>';
 		    	 }else{
-		    	 	elements += '<input class="btn btn-info ml-2 child add_to_cart" type="button" name="addcart" value="Added" style="width:75%;height:23px;padding:0;padding-top:2px; font-size:12px;color:#fff;"/>'
+		    	 	elements += '<input type="number" name="qty" min="1" max="10" value="'+localState[value.Id].qty+'" style="width:40%;height:20px;" class="child inc_dec_btn" >'
+		    	 				+'</div><div class="col-md-2" style="position:relative">'
+		    	 				+'<input class="btn btn-info ml-2 child add_to_cart" type="button" name="addcart" value="Added" style="width:75%;height:23px;padding:0;padding-top:2px; font-size:12px;color:#fff;"/>'
 		    	 			    +'</div></div></form></li>';
 		    	 }
 		    	 return elements;

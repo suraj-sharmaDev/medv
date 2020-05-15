@@ -24,9 +24,20 @@ class localstorage {
 		//check if the given product already exists then just
 		//increment the qty
 		if(localState[data.id]!==undefined){
-			localState[data.id]['qty']++;
+			if(localState[data.id]['qty'] < 9){
+				localState[data.id]['qty']++;
+			}else{
+				alert('Cannot Add more than 9');
+				return false;
+			}
 		}else{
-			localState[data.id] = data;
+			//if the item is newly added check if its quantity is sanitized
+			if(data.qty < 9){
+				localState[data.id] = data;
+			}else{
+				data.qty = 9;
+				localState[data.id] = data;				
+			}
 		}
 		//clear localStorage before adding new data
 		this.state = localState;
