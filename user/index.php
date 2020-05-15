@@ -186,12 +186,15 @@ if(isset($_POST['submit'])){
 $username=$_POST['user'];
 $pwd=$_POST['password'];
 require_once(__ROOT__.'/curl_helper.php');
+
+// $url = 'http://182.18.157.79/medv/api/customer/w/CustLogin?userName='.$username.'&pwd='.$pwd;
+// //create a new cURL resource
+// $parameters = json_encode(array());
+
 $action = "POST";
 $url = 'http://182.18.157.79/medv/api/customer/w/CustLogin';
-$parameters = array("username" => $username,"pwd" => $pwd);
+$parameters = json_encode(array("username" => $username,"pwd" => $pwd));
 //create a new cURL resource
-
-$parameters = json_encode(array());
 $result = CurlHelper::perform_http_request($action, $url, $parameters);
 echo "<script>console.log(".$result.")</script>";
 // if($result == -1){
