@@ -2,10 +2,15 @@
 //to reduce confusion
 const search = async (searchField='medi') => {
     // const baseUrl = 'https://www.medv.crypt4bits.com/';
-    const baseUrl = 'http://localhost/medv/';	
+    const baseUrl = 'http://localhost/medv/';
+
 	var expression = new RegExp(searchField, "i");
     var url = 'http://182.18.157.79/medv/api/drug/serDrug?drugName=' + searchField;
-    const response = await fetch(url);
+    var proxyUrl = baseUrl+'ajax/proxy_site.php';
+    // const response = await fetch(url,{
+    // 	method : 'POST',
+    	
+    // });
     const result = await response.json();
 	const localState = _localStorage.retrieveCart();    
   	if(result.length==0){
