@@ -34,6 +34,22 @@ class localstorage {
 		localStorage.setItem('cart', JSON.stringify(localState));
 	}
 
+	incCart(id, qty){
+		var localState = this.retrieveCart();
+		//check if the given product already exists then just
+		//increment the qty
+		if(localState[id]!==undefined){
+			localState[id]['qty'] = qty;
+		}else{
+			// nothing
+		}
+		//clear localStorage before adding new data
+		this.state = localState;
+		localStorage.removeItem('cart');
+		localStorage.setItem('cart', JSON.stringify(localState));
+		return true;
+	}
+
 	delCart(data){
 		var localState = this.retrieveCart();
 		//check if the given product already exists then just

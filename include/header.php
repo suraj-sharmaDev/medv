@@ -323,7 +323,7 @@ input[type=number] {
     <i class="glyphicon glyphicon-user"></i>
     <input type="text" class="form-control" />
 </div> -->
-        <form class="form-inline my-2 my-lg-0 nav-link inner-addon right-addon" >
+        <div class="form-inline my-2 my-lg-0 nav-link inner-addon right-addon" >
           <img src="<?php echo $URL;?>/images/search-button.png">
           <input class="form-control mr-sm-2" type="search" minlength="2" name="search" id="search" placeholder="Search for all your medical needs" aria-label="Search" autocomplete="off" required title="3 characters minimum">
 
@@ -331,7 +331,7 @@ input[type=number] {
           <input type="button" class="btn btn-search" id="srcBtn" name="searchall" value="Search">
 
           <ul class="list-group" id="result" style="position: absolute;"></ul>
-        </form>
+        </div>
       </li>
       <li class="nav-item" style="
     line-height: 77px;"><a class="btn btn-medv my-2 my-sm-0" href="upload.php">Upload Prescription</a></li>
@@ -495,7 +495,7 @@ searchField.addEventListener('keyup', function (e){
       _localStorage.addCart(cartValue);
       $(this).attr('value', 'Added');
       //simultaneously change the content in cart
-      changeContentInCart();
+      changeContentInCart(true);
       console.log(_localStorage.state);
     })
 

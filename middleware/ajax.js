@@ -49,18 +49,18 @@ const search = async (searchField='medi') => {
 		    	 			+ '</a><br><span>' 
 		    	 			+ value.DrugDtls 
 		    	 			+ '</span></div><div class="col-md-2" style="position:relative">'
-		    	 			+'<input type="hidden" name="dname" id="dname"  value="' + value.SearchResult + '">'
-		    	 			+'<input type="hidden" name="detail" id="detail"  value="' + value.DrugDtls + '">'
-		    	 			+'<input type="hidden" name="id" id="id"  value="' + value.Id + '">'
-		    	 			+'<input type="hidden" name="type" id="type"  value="' + value.Type + '">'
-		    	 			+'<input type="number" name="qty" min="1" max="10" value="1" style="width:40%;height:20px;" id="qty" class="child inc_dec_btn" >'
+		    	 			+'<input type="hidden" name="dname" value="' + value.SearchResult + '">'
+		    	 			+'<input type="hidden" name="detail"  value="' + value.DrugDtls + '">'
+		    	 			+'<input type="hidden" name="id"  value="' + value.Id + '">'
+		    	 			+'<input type="hidden" name="type" value="' + value.Type + '">'
+		    	 			+'<input type="number" name="qty" min="1" max="10" value="1" style="width:40%;height:20px;" class="child inc_dec_btn" >'
 		    	 			+'</div><div class="col-md-2" style="position:relative">';
 		    	 if(localState[value.Id]==undefined){
 		    	 	//the item was not added
-		    	 	elements += '<input id="cart1" class="btn btn-info ml-2 child add_to_cart" type="button" name="addcart" value="Add to cart" style="width:75%;height:23px;padding:0;padding-top:2px; font-size:12px;color:#fff;"/>'
+		    	 	elements += '<input class="btn btn-info ml-2 child add_to_cart" type="button" name="addcart" value="Add to cart" style="width:75%;height:23px;padding:0;padding-top:2px; font-size:12px;color:#fff;"/>'
 		    	 			    +'</div></div></form></li>';
 		    	 }else{
-		    	 	elements += '<input id="cart1" class="btn btn-info ml-2 child add_to_cart" type="button" name="addcart" value="Added" style="width:75%;height:23px;padding:0;padding-top:2px; font-size:12px;color:#fff;"/>'
+		    	 	elements += '<input class="btn btn-info ml-2 child add_to_cart" type="button" name="addcart" value="Added" style="width:75%;height:23px;padding:0;padding-top:2px; font-size:12px;color:#fff;"/>'
 		    	 			    +'</div></div></form></li>';
 		    	 }
 		    	 return elements;

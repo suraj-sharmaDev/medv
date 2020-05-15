@@ -5,7 +5,7 @@
 _previousVal = _localStorage.state;
 
 //this function affects the header.php
-function changeContentInCart(){
+function changeContentInCart(addClicked=false){
 	cartCount = document.getElementById('cart-count'); //the  badge 
 	cartSummCt = document.getElementById('cart_summ_ct');
 	cartItemsList = document.getElementById('cart-items-list');
@@ -23,13 +23,15 @@ function changeContentInCart(){
 	}
 	cartItemsList.innerHTML = _medicines;
 	//check if the view cart should also be refreshed
-	if(/viewcart/i.test(window.location.pathname) && Object.keys(_localStorage.state).length > 0){
+	if(/viewcart/i.test(window.location.pathname) && Object.keys(_localStorage.state).length > 0 && addClicked){
 		changeContentInView();
+		console.log('called from cart');
 	}
 }
 
 //this affects index.php in viewcart folder
 function changeContentInView(){
+	console.log('change view');
 	cartCount = document.getElementById('cart-count-div');
 	cartDivView = document.getElementById('cart-div-view');
 	cartCount.innerText = Object.keys(_localStorage.state).length;	
@@ -38,7 +40,7 @@ function changeContentInView(){
 	if(Object.keys(_localStorage.state).length > 0){
 		for(var key in _localStorage.state){
 		 	_medicines += "<div class='shadow p-3 mb-3 bg-white rounded'>"
-					+"<divform class='inner-addon'>"
+					+"<div class='inner-addon'>"
 					+"<div class='row'>"
 					+"<div class='col-md-2' style='position:relative'>";			
 			//find appropriate icon
@@ -75,11 +77,11 @@ function changeContentInView(){
 						  +_localStorage.state[key]['dname']
 						  +"</a><br><span style='font-size:13px'>"
 						  +_localStorage.state[key]['detail']+"</span></div><div class='col-md-2' style='position:relative'>"
-						  +"<input type='hidden' name='dname' id='dname'  value='"+_localStorage.state[key]['dname']+"'>"
-						  +"<input type='hidden' name='id' id='id'  value='"+key+"' class='item_id'>"
+						  +"<input type='hidden' name='dname' class='dname' value='"+_localStorage.state[key]['dname']+"'>"
+						  +"<input type='hidden' name='id' value='"+key+"' class='item_id'>"
 						  +"<input type='hidden' value='"+key+"' class='arr_index'>"
 						  +"<span class='quant'>Qty:</span>"
-						  +"<input type='number' value='"+_localStorage.state[key]['qty']+"' name='qty' min='1' max='10' style='width:63%;height:30px;' id='qty' class='child qty' >"
+						  +"<input type='number' value='"+_localStorage.state[key]['qty']+"' onchange='qtyChange(this);' min='1' max='10' style='width:63%;height:30px;' class='child qty' >"
 						  +"</div><div class='col-md-2' style='position:relative'>"
 						  +"<button onclick='remove_med("+key+")' class='btn ml-2 child' name='remove' style='width:75%;height:35px;padding:0; font-size:14px;background-color:#004a8e;color:#24d5e1' >"
 						  +"<i class='fa fa-trash text-danger' aria-hidden='true'></i> Remove</button>"

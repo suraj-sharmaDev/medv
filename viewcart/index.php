@@ -521,21 +521,22 @@ input[type=number] {
   },
   midClick: true // allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source.
 });
+
+  //When the quantity is changed don't make ajax request
+  //rather change the value in localstorage
+  function qtyChange(el){
+    id = $(el).parent('div').find('.arr_index').val();
+    qty = $(el).val();    
+    if(qty > 9){
+      alert('The quantity should be less than 9');
+      changeContentInView();
+    }else{
+      _localStorage.incCart(id, qty);
+      changeContentInCart();    
+    }
+  }
+
   $(document).ready(function() {
-
-    $(".qty").change(function(){
-      var url = '../ajax/cart_qty_update.php';
-      let arr_index = $(this).parents('form').find('.arr_index').val();
-      let qty = $(this).val();
-      // alert(arr_index);
-      if(qty){
-        $.get(url,{'arr_index':arr_index,'qty':qty},function(resp){
-          console.log(resp);
-        });
-      }
-      
-    });
-
   if (window.File && window.FileList && window.FileReader) {
     $(".files").on("change", function(e) {
       var clickedButton = this;
