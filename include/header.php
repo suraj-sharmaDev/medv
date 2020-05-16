@@ -338,7 +338,8 @@ input[type=number] {
     <!-- changed the dependency from backend session to localstorage start-->
     <div id="cart_added">
       <li class="nav-item ml-5 dropdown "  style="position: relative">
-        <a href="#" class="nav-link" id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+        <!-- initially disabled...will be enabled only when medicines added to cart -->
+        <a href="#" class="nav-link disabled cart_added_dropdown" id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
           <img src="<?php echo $URL;?>/images/cart.png" style="position: fixed"> 
           <span id="cart-count" class="cartct">
           </span>
@@ -401,7 +402,21 @@ input[type=number] {
 </nav>
 </div>
  <script type="text/javascript">
+  //if there was a logout happening recently 
+  //flush the localStorage too
+  loggedOut = window.location.search.replace('?', '');
+  loggedOut = loggedOut.split('=');
+  console.log(loggedOut[1]=='true')
+  if(loggedOut[1] == 'true'){
+    _localStorage.logOut();
+  }
   changeContentInCart();  //call regenerator script after page loads
+
+  //initially check if the cart should be enabled or not
+  if(Object.keys(_localStorage.state).length > 0){
+    $('.cart_added_dropdown').removeClass('disabled');
+  }
+
    /* var globalTimeout = null; */
  /*function clicksearch(){
     var searchField = $('#search').val();
@@ -496,6 +511,8 @@ searchField.addEventListener('keyup', function (e){
       $(this).attr('value', 'Added');
       //simultaneously change the content in cart
       changeContentInCart(true);
+      //also change the status of cart button from disabled to not
+      $('.cart_added_dropdown').removeClass('disabled');
       console.log(_localStorage.state);
     })
 

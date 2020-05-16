@@ -5,14 +5,99 @@ Issues
 `Deleting` item deletes the prescription
 sqli Injection
 
-
-RDP IP ADDRESS : 182.18.157.79:33893
-Username  : Administrator
-Password   :  -xMSas*3ryg#w7
-Hostname  : Ingex_C06791
-
 How it was solved!
 ----------------
 
 - changed the server session to localstorage
 - put constants.php containig the baseurl for js counterpart baseurl is in ajax.js
+
+
+Issue 1
+    • Go to http://www.gwebsolution.com/demo/medv/ -> Add few medicines in the cart. 
+    • Click on cart 
+Current Behaviour: Cart icon not activated unless page is refreshed
+Expected Behaviour: Cart icon to be activated without refreshing the page
+
+Issue 2
+    • Go to http://www.gwebsolution.com/demo/medv/ -> Search for items
+    • Click Enter ->   (Current URL http://gwebsolution.com/demo/medv/search/?search=cGFy)
+Current Behaviour: Additional page is appearing
+Expected Behaviour: Remove the additional page i.e. http://gwebsolution.com/demo/medv/search/?search=cGFy
+And list the items in the home page search window even after clicking Enter button
+
+Issue 3
+    • Go to http://www.gwebsolution.com/demo/medv/ -> Add few medicines in the cart. 
+    • Click on cart -> Click on ‘PROCEED TO CART’  (Current URL http://gwebsolution.com/demo/medv/viewcart/)
+Current Behaviour: Quantity of items is not restricted and validated
+Expected Behaviour: Restrict the number of quantity per item to 5 nos
+Also restrict special characters / characters / decimal numbers
+
+
+Issue 4
+    • Go to http://www.gwebsolution.com/demo/medv/ -> Add few medicines in the cart. 
+    • Click on cart -> Click on ‘PROCEED TO CART’  (Current URL http://gwebsolution.com/demo/medv/viewcart/)
+Current Behaviour: Items getting removed when Enter is pressed inside the quantity box
+Expected Behaviour: Let the quantity get updated when pressed Enter button
+
+
+Issue 5
+
+    • Go to http://www.gwebsolution.com/demo/medv/ -> Add few medicines in the cart. 
+    • Click on cart -> Click on ‘PROCEED TO CART’  (Current URL http://gwebsolution.com/demo/medv/viewcart/)
+    • Click On ‘Upload Prescription’
+Current Behaviour: No Restriction in number of images uploaded
+Expected Behaviour: Restrict the number of prescription images to only 3
+
+
+
+
+
+
+
+
+Issue 6
+
+    • Go to http://www.gwebsolution.com/demo/medv/ -> Add few medicines in the cart. 
+    • Click on cart -> Click on ‘PROCEED TO CART’  (Current URL http://gwebsolution.com/demo/medv/viewcart/)
+    • Click On ‘Upload Prescription’ , then Remove One medicine from the list 
+Current Behaviour: uploaded prescription Image thumbnail is getting removed 
+Expected Behaviour: No items other than intended one should be removed
+
+Issue 7
+
+    • Go to http://www.gwebsolution.com/demo/medv/ -> Add few medicines in the cart. 
+    • Click on cart -> Click on ‘PROCEED TO CART’  (Current URL http://gwebsolution.com/demo/medv/viewcart/)
+    • Click on Search Tab, then again search for items and add to cart
+Current Behaviour: Items not getting updated in review cart page i.e. http://gwebsolution.com/demo/medv/viewcart/
+Expected Behaviour: Items should get updated I the view cart page automatically
+
+
+Issue 8
+    • No Scroll Bar visible in any pages.
+
+Issue 9
+
+    • Go to http://www.gwebsolution.com/demo/medv/ -> Add few medicines in the cart. 
+    • Click on cart -> Click on ‘PROCEED TO CART’  (Current URL http://gwebsolution.com/demo/medv/viewcart/)
+Click On ‘Upload Prescription’, add 3 images, then click ‘Submit’
+    • Login page – login success
+    • Current URL: http://gwebsolution.com/demo/medv/proceed/
+Current Behaviour: Uploaded prescription images not shown in the page 
+Expected Behaviour: Uploaded prescription images to be visible
+
+
+
+
+Issue 10
+
+    • Go to http://www.gwebsolution.com/demo/medv/ -> Add few medicines in the cart. 
+    • Click on cart -> Click on ‘PROCEED TO CART’  (Current URL http://gwebsolution.com/demo/medv/viewcart/)
+Click On ‘Upload Prescription’, add 3 images, then click ‘Submit’
+    • Login page – login success
+    • Current URL: http://gwebsolution.com/demo/medv/proceed/
+    • Click on Add New Address
+    • Redirects to page http://gwebsolution.com/demo/medv/proceed/add_address/
+    • Insert all the fields and then click on Save address
+    • Redirects to page: http://gwebsolution.com/demo/medv/proceed/
+Current Behaviour: Saved Address is not visible
+Expected Behaviour Saved Address to be visible

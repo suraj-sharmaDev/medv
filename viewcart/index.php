@@ -187,7 +187,7 @@ input[type="file"] {
     </style>
 </head>
 <body>
-	<?php include '../include/header.php';?>
+  <?php include '../include/header.php';?>
   
 <section class="mt-5 mb-5 ">
   <div class="container shadow  mb-5 bg-white rounded" style="padding: 15px 30px">
@@ -207,7 +207,7 @@ input[type="file"] {
       </div>
       <div class="col-md-4 text-center">
         <form enctype="multipart/form-data" method="post" >
-          <div class="upload-btn-wrapper">
+          <div class="upload-btn-wrapper" id="prescription-div">
             <button class="btn form-control" >+ Upload Prescription</button>
             <input type="file" name="files[]" class="files" id="image" accept="image/jpg, image/jpeg" />
           </div>
@@ -216,7 +216,7 @@ input[type="file"] {
             <input type="checkbox" name="noprecrip" id="noprep" ><span style="text-decoration: underline;padding-left:5px">don't have prescription?</span>
           </div>
         <div id="inline-popups"  class=" mt-4">
-          <button type="submit" name="continue" class="continue btn">Continue</button> <!-- href="#test-popup" class="continue btn" data-effect="mfp-zoom-in"></a> -->
+          <button name="continue" class="continue btn">Continue</button> <!-- href="#test-popup" class="continue btn" data-effect="mfp-zoom-in"></a> -->
         </div>
         </form>
         <div class="container mt-4">
@@ -502,7 +502,6 @@ input[type=number] {
 <script type="text/javascript">
   //Initialization for the page
   changeContentInView();
-
   //function call to remove the medicine from localstorage
   function remove_med(key){
     _localStorage.removeFromCart(key);
@@ -527,39 +526,73 @@ input[type=number] {
   function qtyChange(el){
     id = $(el).parent('div').find('.arr_index').val();
     qty = $(el).val();    
-    if(qty > 9){
-      alert('The quantity should be less than 9');
+    if(qty > 5){
+      alert('The quantity should not be more than 5');
       changeContentInView();
     }else{
       _localStorage.incCart(id, qty);
       changeContentInCart();    
     }
   }
+   // _localStorage.emptyCart();
 
   $(document).ready(function() {
-  if (window.File && window.FileList && window.FileReader) {
-    $(".files").on("change", function(e) {
-      var clickedButton = this;
-      var files = e.target.files,
-        filesLength = files.length;
-      for (var i = 0; i < 3; i++) {
-        var f = files[i];
-        var fileReader = new FileReader();
-        fileReader.onload = (function(e) {
-          var file = e.target;
-          $("<span class=\"pip\">" +
-            "<img class=\"imageThumb\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
-            "<br/><span class=\"remove\">X</span>" +
-            "</span>").insertAfter(clickedButton);
-          $(".remove").click(function(){
-            $(this).parent(".pip").remove();
 
-          });
-          });
-        fileReader.readAsDataURL(f);
-      }
+  $(".remove").click(function() {
+    //also when the prescription deleted
+    //delete its backup in localStorage
+    var id = $(this).prev().attr('id');
+    $(this).parent(".pip").remove();
+    _numberOfUploads--;
+    _localStorage.deleteImage(id);
+  });  
+  
+  console.log(Object.keys(_localStorage.uploadImage).length);
+  _numberOfUploads = Object.keys(_localStorage.uploadImage).length > 0 ? Object.keys(_localStorage.uploadImage).length : 0; 
+  if (window.File && window.FileList && window.FileReader) {
+
+    $(".files").on("change", function(e) {
+        //first check if user is already logged in or not to save
+        //the uploaded prescription from getting deleted
+        if(_localStorage.userId > 0){
+          if (_numberOfUploads < 3) {
+              console.log(_localStorage.userId, _numberOfUploads)            
+              _numberOfUploads++;
+              var clickedButton = this;
+              files = e.target.files,
+                  filesLength = files.length;
+              var f = files[0];
+              var fileReader = new FileReader();
+              fileReader.onload = (function(e) {
+                  var file = e.target;
+                  $("<span class=\"pip\">" +
+                      "<img class=\"imageThumb\" id=" + _numberOfUploads + " src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
+                      "<br/><span class=\"remove\">X</span>" +
+                      "</span>").insertAfter(clickedButton);
+
+                  //store this image as base64 in localStorage
+                  _localStorage.imageUploader(_numberOfUploads, file.result);
+
+              });
+              fileReader.readAsDataURL(f);
+              //save the uri of sile to localStorage for future use
+          } else {
+              alert('Sorry we limit the upload of prescriptions to 3');
+          }          
+        }else{
+          alert('Please login to continue!');
+          e.preventDefault();
+          $.magnificPopup.open({
+              items: {
+                  src: '#test-popup',
+              },
+              type: 'inline',
+              mainClass: 'mfp-zoom-in'
+          });          
+        }
     });
-  } else {
+  } 
+  else {
     alert("Your browser doesn't support to File API")
   }
 });
@@ -640,14 +673,19 @@ $uid=base64_encode($userid);
 ?>
 <?php
 if(isset($_POST['submit'])){
-$username=$_POST['user'];
-$pwd=$_POST['password'];
-require_once(__ROOT__.'/curl_helper.php');
-    $action = "POST";
-$url = 'http://182.18.157.79/medv/api/customer/w/CustLogin?userName='.$username.'&pwd='.$pwd;
-//create a new cURL resource
-$parameters = json_encode(array());
-    $result = CurlHelper::perform_http_request($action, $url, $parameters);
+  $username=$_POST['user'];
+  $pwd=$_POST['password'];
+  require_once(__ROOT__.'/curl_helper.php');
+  $proxyUrl = $URL.'/ajax/proxy_site.php';
+  $action = "POST";
+  $url = 'http://182.18.157.79/medv/api/customer/w/CustLogin';
+  $parameters = array(
+    "action" => "POST",
+    "url" => $url,
+    "headers" => "Content-Type: application/json",
+    "data" => json_encode(array("userName" => $username, "pwd" => $pwd))
+  );
+  $result = CurlHelper::perform_http_request($action, $proxyUrl, $parameters);
 
     if($result == -1){
          echo "<script>
@@ -660,25 +698,26 @@ $parameters = json_encode(array());
                     mainClass: 'mfp-zoom-in'
                   });
                </script>";
-    }
-    else{
+    }else if(is_numeric($result))
+    {
       define('__ROOT__', dirname(__FILE__));
       $custid=$result;
-  require_once(__ROOT__.'/curl_helper.php');
-    $action = "GET";
-   $url = 'http://182.18.157.79/medv/api/customer/profile';
-    /*echo "Trying to reach ...";
-    echo $url;*/
-    $parameters = array("custId" => $custid);
-    $result = CurlHelper::perform_http_request($action, $url, $parameters);
-/*print_r($result);*/
-$resultData = json_decode($result, TRUE);
-$_SESSION['custid']=$resultData['custId'];
-$_SESSION['custname']=$resultData['customerName'];
-$_SESSION['mobNo']=$resultData['mobNo'];
-$_SESSION['email']=$resultData['email'];
+      require_once(__ROOT__.'/curl_helper.php');
+    
+      $proxyUrl = $URL.'/ajax/proxy_site.php';
+      $action = "GET";
+      $url = 'http://182.18.157.79/medv/api/customer/profile?custId='.$result;
+
+      $result = CurlHelper::perform_http_request($action, $proxyUrl);
+
+      /*print_r($result);*/
+      $resultData = json_decode($result, TRUE);
+      $_SESSION['custid']=$custid;
+      $_SESSION['custname']=$resultData['customerName'];
+      $_SESSION['mobNo']=$resultData['mobNo'];
+      $_SESSION['email']=$resultData['email'];
       echo "<script>
-            alert('Logged In Successfully $result');
+            _localStorage.logIn($custid);
             $.magnificPopup.open({
                     items: {
                       src: '#success'
@@ -686,10 +725,22 @@ $_SESSION['email']=$resultData['email'];
                     type: 'inline',
                     mainClass: 'mfp-zoom-in'
                   });
-            window.location='../proceed';
       </script>";
-      /*header('location:../proceed');*/
-     /* $_SESSION['custid']=$result;*/
+      echo "<script>window.location.href='index.php';</script>";
+      exit;
+    }
+    else
+    {
+      echo "<script>
+            console.log('$result');
+            $.magnificPopup.open({
+                    items: {
+                      src: '#success'
+                    },
+                    type: 'inline',
+                    mainClass: 'mfp-zoom-in'
+                  });
+           </script>";
     }
 }
 ?>
@@ -751,6 +802,9 @@ $mobile=$_POST['mobile'];
 <?php
 if(isset($_POST['continue'])){
 if($_POST['custid']!=" "){
+  //this is where the api call should happen
+  //first call is for creating a order with medicines
+  //second call is for uploading the images
     echo "<script>
     window.location='../proceed';
     </script>";

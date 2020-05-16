@@ -212,6 +212,7 @@ if($result == -1){
 else if(is_numeric($result)){
   echo "<script>
           alert('Logged In Successfully $result');
+          _localStorage.logIn($result);
           window.location='../';
         </script>";
   $_SESSION['custid']=$result;

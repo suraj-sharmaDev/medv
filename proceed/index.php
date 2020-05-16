@@ -260,57 +260,9 @@ input[type=number] {
       </div>
       <div class="col-md-6">
       <div class="shadow">
-      <?php
-         foreach ($_SESSION['cart'] as $item_id =>$val) {
-                $product=$val['product'];
-                $quantity=$val['quantity'];
-
-                echo "<div class='p-3 bg-white rounded'><form class='inner-addon' method='post' action='remove.php'><div class='row'><div class='col-md-2' style='position:relative'>";
-                if( $val['type'] == "Capsule/Tablet") {    
-                  echo '<img src="../svg/003-drugs.svg" style="top:unset; width:65px">';
-                }
-                else if($val['type'] == "Drops"){
-                  echo '<img src="../svg/013-eye-drops.svg" style="top:unset; width:65px">';
-                }
-                else if($val['type'] == "Suspension"){
-                  echo '<img src="../svg/011-medicine-2.svg" style="top:unset; width:65px">';
-                }
-                else if($val['type'] == "Injection"){
-                  echo '<img src="../svg/007-vaccine.svg" style="top:unset; width:65px">';
-                }
-                else if($val['type'] == "Syrup"){
-                  echo '<img src="../svg/020-syrup.svg" style="top:unset; width:65px">';
-                }
-                else if($val['type'] == "Capsule"){
-                  echo '<img src="../svg/001-pills.svg" style="top:unset; width:65px">';
-                }
-                else if($val['type'] == "Tablet"){
-                  echo '<img src="../svg/006-drug-1.svg" style="top:unset; width:65px">';
-                }
-                else if($val['type'] == "Cream"){
-                  echo '<img src="../svg/005-moisturizer.svg" style="top:unset; width:65px">';
-                }
-                else if($val['type'] == "Lotion"){
-                  echo '<img src="../svg/019-cosmetics.svg" style="top:unset; width:65px">';
-                }
-                else if($val['type'] == "Other"){
-                  echo '<img src="../svg/008-doctor.svg" style="top:unset; width:65px">';
-                }
-                else if($val['type'] == "gel"){
-                  echo '<img src="../svg/001-gel.svg" style="top:unset; width:65px">';
-                }
-                else if($val['type'] == "Solution"){
-                  echo '<span class="flaticon-potion" style="font-size:40px; vertical-align:text-top"></span>';
-                }
-                else if($val['type'] == "Liquid"){
-                  echo '<img src="../svg/004-patient.svg" style="top:unset; width:65px">';
-                }
-                else if($val['type'] == "Ointment"){
-                  echo '<img src="../svg/017-ointment.svg" style="top:unset; width:65px">';
-                }
-                echo "</div><div class='col-md-6'><a href='#'>$product</a><br><span style='font-size:13px'>$val[drugDtls]</span></div><div class='col-md-2' style='position:relative;padding-top:15px'><input type='hidden' name='dname' id='dname'  value='$val[product]'><input type='hidden' name='id' id='id'  value='$val[item_id]'><span class='quant'>Qty: $quantity</span><input type='hidden' value='$quantity' name='qty' min='1' max='10'style='width:63%;height:30px;' id='qty' class='child qty' ></div><div class='col-md-2' style='position:relative'></div></div></form></div>";
-              }
-              ?>
+        <div id="cart-div-view">
+        <!-- this is where the localstorage data will be filled           -->
+        </div>
 </div>
 <div class="form-group text-center" style="padding-top: 25px">
   <input type="submit" class="btn btn-submit form-control" name="submit" value="Request to Quote"><!-- <br>OR<br>
@@ -324,7 +276,10 @@ input[type=number] {
 <?php  include '../include/footer.php';?>
 </body>
 <?php include '../include/jsplugin.php';?>
-<script src="http://fast.wistia.net/labs/fresh-url/v1.js" async></script>
+<script type="text/javascript">
+  changeContentInProceedView();
+</script>>
+<script src="https://fast.wistia.net/labs/fresh-url/v1.js" async></script>
 <script src="https://code.jquery.com/jquery-migrate-1.4.1.min.js"></script>
 
 

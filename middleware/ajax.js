@@ -65,12 +65,12 @@ const search = async (searchField='medi') => {
 		    	 			+'<input type="hidden" name="type" value="' + value.Type + '">';
 		    	 if(localState[value.Id]==undefined){
 		    	 	//the item was not added
-		    	 	elements += '<input type="number" name="qty" min="1" max="10" value="1" style="width:40%;height:20px;" class="child inc_dec_btn" >'
+		    	 	elements += '<input type="number" name="qty" min="1" max="5" value="1" style="width:40%;height:20px;" class="child inc_dec_btn" >'
 		    	 				+'</div><div class="col-md-2" style="position:relative">'
 		    	 				+'<input class="btn btn-info ml-2 child add_to_cart" type="button" name="addcart" value="Add to cart" style="width:75%;height:23px;padding:0;padding-top:2px; font-size:12px;color:#fff;"/>'
 		    	 				+'</div></div></form></li>';
 		    	 }else{
-		    	 	elements += '<input type="number" name="qty" min="1" max="10" value="'+localState[value.Id].qty+'" style="width:40%;height:20px;" class="child inc_dec_btn" >'
+		    	 	elements += '<input type="number" name="qty" min="1" max="5" value="'+localState[value.Id].qty+'" style="width:40%;height:20px;" class="child inc_dec_btn" >'
 		    	 				+'</div><div class="col-md-2" style="position:relative">'
 		    	 				+'<input class="btn btn-info ml-2 child add_to_cart" type="button" name="addcart" value="Added" style="width:75%;height:23px;padding:0;padding-top:2px; font-size:12px;color:#fff;"/>'
 		    	 			    +'</div></div></form></li>';

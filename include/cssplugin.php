@@ -19,6 +19,8 @@
 <script type="text/javascript" src="<?php echo $URL;?>/middleware/localstorage.js"></script>
 <script type="text/javascript" src="<?php echo $URL;?>/middleware/ajax.js"></script>
 <script type="text/javascript">
-_localStorage = new localstorage();
+//we pass the session id to our localstorage instance
+const _localStorage = new localstorage(<?php echo $_SESSION['custid'] ? $_SESSION['custid'] : 0 ; ?>);
 </script>
 <script type="text/javascript" src="<?php echo $URL;?>/middleware/regeneratorscript.js"></script>
+<script type="text/javascript" src="<?php echo $URL;?>/middleware/helper.js"></script>
