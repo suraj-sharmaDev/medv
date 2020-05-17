@@ -109,16 +109,20 @@ function changeContentInView(){
 			spanMain.appendChild(img);
 
 			spanChild.setAttribute("class", "remove");
-			spanChild.innerHTML = "X";
+
+			var text = document.createTextNode("X");
+			spanChild.appendChild(text);
 
 			spanMain.appendChild(spanChild);
             prescriptionView.appendChild(spanMain);
 		}
+	}else{
+		$('.continue').attr('disabled', 'disabled');
 	}
 }
 
 
-//this affects index.php in viewcart folder
+//this affects index.php in proceed folder
 function changeContentInProceedView(){
 	console.log('change view');
 	cartDivView = document.getElementById('cart-div-view');
@@ -126,7 +130,7 @@ function changeContentInProceedView(){
 	_medicines = '';	
 	if(Object.keys(_localStorage.state).length > 0){
 		for(var key in _localStorage.state){
-		 	_medicines += "<div class='p-3 bg-white rounded'><form class='inner-addon' method='post' action='remove.php'><div class='row'><div class='col-md-2' style='position:relative'>";			
+		 	_medicines += "<div class='p-3 bg-white rounded'><div class='inner-addon'><div class='row'><div class='col-md-2' style='position:relative'>";			
 			//find appropriate icon
 			if (_localStorage.state[key]['type'] == "Capsule/Tablet") {
 			    _medicines += '<img src="../svg/003-drugs.svg" style="top:unset; width:65px">';
@@ -163,12 +167,13 @@ function changeContentInProceedView(){
 						  +_localStorage.state[key]['detail']
 						  +"</span></div>"
 						  +"<div class='col-md-2' style='position:relative;padding-top:15px'>"
-						  +"<input type='hidden' name='dname' id='dname'  value='"+_localStorage.state[key]['dname']+"'>"
-						  +"<input type='hidden' name='id' id='id'  value='"+key+"'>"
+						  +"<input type='hidden' name='dname[]' id='dname'  value='"+_localStorage.state[key]['dname']+"'>"
+						  +"<input type='hidden' name='id[]' id='id'  value='"+key+"'>"
 						  +"<span class='quant'>Qty: "+_localStorage.state[key]['qty']+"</span>"
-						  +"<input type='hidden' value='"+_localStorage.state[key]['qty']+"' name='qty' min='1' max='10'style='width:63%;height:30px;' id='qty' class='child qty'>"
-						  +"</div><div class='col-md-2' style='position:relative'></div></div></form></div>";
-		}		
+						  +"<input type='hidden' value='"+_localStorage.state[key]['qty']+"' name='qty[]' min='1' max='10'style='width:63%;height:30px;' id='qty' class='child qty'>"
+						  +"</div><div class='col-md-2' style='position:relative'></div></div></div></div>";
+		}
+		_medicines += "<input type='hidden' value='"+_localStorage.userId+"' name='userId'/>";
 		cartDivView.innerHTML = _medicines;
 	}else{
 		cartDivView.innerHTML = _medicines;		

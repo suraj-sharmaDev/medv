@@ -169,7 +169,7 @@ input[type=number] {
 <section class="mt-5 mb-5 ">
   <div class="container">
     <h5 style="color: #000">Select Address</h5>
-    <form method="POST">
+    <form method="POST" action="../ajax/createOrder.php">
     <div class="row">
       <div class="col-md-6">
         <div class="shadow">
@@ -180,7 +180,7 @@ input[type=number] {
               <div class="radio-item">
                 <div class="row p-3">
                   <div class="col-md-1">
-                    <input type="radio" id="<?php echo $addr['AddLabel']; ?>"  name="addtype" value="<?php echo $addr['AddLabel']; ?>" checked="" > <label for="<?php echo $addr['AddLabel']; ?>" ></label>
+                    <input type="radio" id="<?php echo $addr['AddLabel']; ?>"  name="addressId" value="<?php echo $addr['AddressId']; ?>" checked="" > <label for="<?php echo $addr['AddLabel']; ?>" ></label>
                   </div>
                   <div class="col-md-9">
                     <b><?php echo $addr['AddLabel']; ?></b><br>

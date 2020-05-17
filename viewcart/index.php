@@ -216,7 +216,7 @@ input[type="file"] {
             <input type="checkbox" name="noprecrip" id="noprep" ><span style="text-decoration: underline;padding-left:5px">don't have prescription?</span>
           </div>
         <div id="inline-popups"  class=" mt-4">
-          <button name="continue" class="continue btn">Continue</button> <!-- href="#test-popup" class="continue btn" data-effect="mfp-zoom-in"></a> -->
+          <button type="submit" name="continue" class="continue btn">Continue</button> <!-- href="#test-popup" class="continue btn" data-effect="mfp-zoom-in"></a> -->
         </div>
         </form>
         <div class="container mt-4">
@@ -534,17 +534,36 @@ input[type=number] {
       changeContentInCart();    
     }
   }
-   // _localStorage.emptyCart();
-
+  //  // _localStorage.emptyCart();
+  // $(".remove").click(function() {
+  //   console.log('click')
+  //   //also when the prescription deleted
+  //   //delete its backup in localStorage
+  //   var id = $(this).prev().attr('id');
+  //   $(this).parent(".pip").remove();
+  //   _numberOfUploads--;
+  //   _localStorage.deleteImage(id);
+  //   if(_numberOfUploads == 0){
+  //     //then disable the continue
+  //     $('.continue').attr('disabled', 'disabled');
+  //   }
+  // });  
+  
   $(document).ready(function() {
+    console.log('ready');
 
   $(".remove").click(function() {
+    console.log('click')
     //also when the prescription deleted
     //delete its backup in localStorage
     var id = $(this).prev().attr('id');
     $(this).parent(".pip").remove();
     _numberOfUploads--;
     _localStorage.deleteImage(id);
+    if(_numberOfUploads == 0){
+      //then disable the continue
+      $('.continue').attr('disabled', 'disabled');
+    }
   });  
   
   console.log(Object.keys(_localStorage.uploadImage).length);
@@ -554,49 +573,38 @@ input[type=number] {
     $(".files").on("change", function(e) {
         //first check if user is already logged in or not to save
         //the uploaded prescription from getting deleted
-        if(_localStorage.userId > 0){
-          if (_numberOfUploads < 3) {
-              console.log(_localStorage.userId, _numberOfUploads)            
-              _numberOfUploads++;
-              var clickedButton = this;
-              files = e.target.files,
-                  filesLength = files.length;
-              var f = files[0];
-              var fileReader = new FileReader();
-              fileReader.onload = (function(e) {
-                  var file = e.target;
-                  $("<span class=\"pip\">" +
-                      "<img class=\"imageThumb\" id=" + _numberOfUploads + " src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
-                      "<br/><span class=\"remove\">X</span>" +
-                      "</span>").insertAfter(clickedButton);
+      if (_numberOfUploads < 3) {
+          console.log(_localStorage.userId, _numberOfUploads)
+          _numberOfUploads++;
+          var clickedButton = this;
+          files = e.target.files,
+              filesLength = files.length;
+          var f = files[0];
+          var fileReader = new FileReader();
+          fileReader.onload = (function(e) {
+              var file = e.target;
+              $("<span class=\"pip\">" +
+                  "<img class=\"imageThumb\" id=" + _numberOfUploads + " src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
+                  "<br/><span class=\"remove\">X</span>" +
+                  "</span>").insertAfter(clickedButton);
 
-                  //store this image as base64 in localStorage
-                  _localStorage.imageUploader(_numberOfUploads, file.result);
+              //store this image as base64 in localStorage
+              _localStorage.imageUploader(_numberOfUploads, file.result);
 
-              });
-              fileReader.readAsDataURL(f);
-              //save the uri of sile to localStorage for future use
-          } else {
-              alert('Sorry we limit the upload of prescriptions to 3');
-          }          
-        }else{
-          alert('Please login to continue!');
-          e.preventDefault();
-          $.magnificPopup.open({
-              items: {
-                  src: '#test-popup',
-              },
-              type: 'inline',
-              mainClass: 'mfp-zoom-in'
-          });          
-        }
+          });
+          fileReader.readAsDataURL(f);
+          //save the uri of sile to localStorage for future use
+      } else {
+          alert('Sorry we limit the upload of prescriptions to 3');
+      }
+
     });
   } 
   else {
     alert("Your browser doesn't support to File API")
   }
 });
-  $('.continue').attr('disabled', 'disabled');
+
   $("#image").on("change", function() {
     if($(this).val()){
       $('#noprep').attr('disabled', 'disabled');
