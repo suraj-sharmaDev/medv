@@ -24,6 +24,10 @@ $orderDetail['Customer_Id'] = $user_id;
 $orderDetail['Address_Id'] = $addr_id;
 $orderDetail['liOrdDtls'] = $medOrders;
 
+//Resultant post data
+
+echo json_encode($orderDetail);
+
 //make a curl request via our proxy
 
 $proxyUrl = $URL.'/ajax/proxy_site.php';
@@ -37,5 +41,5 @@ $parameters = array(
 );
 $result = CurlHelper::perform_http_request($action, $proxyUrl, $parameters);
 
-print_r($result);
+echo "<script>console.log('API Message : ', $result)</script>"
 ?>
