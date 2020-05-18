@@ -40,12 +40,13 @@ $parameters = array(
     "headers" => "Content-Type: application/json",
     "data" => json_encode($orderDetail)
 );
-$result = CurlHelper::perform_http_request($action, $proxyUrl, $parameters);
-// $_SESSION['count'] = 0;
+// $result = CurlHelper::perform_http_request($action, $proxyUrl, $parameters);
+// // $_SESSION['count'] = 0;
 
-$result = json_decode($result, true);
+// $result = json_decode($result, true);
 
-$orderId = $result['orderId'];
+// $orderId = $result['orderId'];
+$orderId = 1;
 
 ?>
 <!DOCTYPE html>
@@ -85,8 +86,8 @@ $orderId = $result['orderId'];
 	// console.log(orderId);
 	var formData = new FormData();
 	var images = _localStorage.uploadImage;
-	var	url = 'http://182.18.157.79/medv/api/Image/uploadPrescription';	
-	// var url = '<?php echo $URL; ?>' + '/ajax/check.php';
+	// var	url = 'http://182.18.157.79/medv/api/Image/uploadPrescription';	
+	var url = '<?php echo $URL; ?>' + '/ajax/check.php';
 	uploadImage(images, url)
 	.then((res)=>{
 		$('#placed').dialog({
