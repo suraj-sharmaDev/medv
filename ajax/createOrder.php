@@ -81,7 +81,7 @@ $orderId = $result['orderId'];
 ?>
 <script>
 	var orderId = <?php echo $orderId ?>;
-	// console.log(orderId);
+	console.log(orderId);
 	var formData = new FormData();
 	var images = _localStorage.uploadImage;
 	var	url = 'http://182.18.157.79/medv/api/Image/uploadPrescription';	
