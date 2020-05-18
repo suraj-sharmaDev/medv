@@ -55,8 +55,8 @@ $orderId = 1;
 	<title></title>
 </head>
 <body>
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-	<script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/jquery-ui.js" type="text/javascript"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/jquery-ui.js" type="text/javascript"></script>
 	<script type="text/javascript" src="<?php echo $URL;?>/middleware/localstorage.js"></script>
 	<script type="text/javascript" src="<?php echo $URL;?>/middleware/helper.js"></script>
 	<script type="text/javascript" src="<?php echo $URL;?>/middleware/compress.js"></script>	
