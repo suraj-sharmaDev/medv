@@ -99,7 +99,7 @@ $orderId = 1;
 		        setTimeout(function() {
 		            $('#placed').dialog('close');
 		            _localStorage.emptyCart();
-		            window.location.href = '<?php echo $URL; ?>' + '/user/myaccount/';
+		            // window.location.href = '<?php echo $URL; ?>' + '/user/myaccount/';
 		        }, 900);
 		    }
 		});
