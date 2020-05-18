@@ -40,13 +40,11 @@ $parameters = array(
     "headers" => "Content-Type: application/json",
     "data" => json_encode($orderDetail)
 );
-// $result = CurlHelper::perform_http_request($action, $proxyUrl, $parameters);
-// // $_SESSION['count'] = 0;
+$result = CurlHelper::perform_http_request($action, $proxyUrl, $parameters);
 
-// $result = json_decode($result, true);
+$result = json_decode($result, true);
 
-// $orderId = $result['orderId'];
-$orderId = 1;
+$orderId = $result['orderId'];
 
 ?>
 <!DOCTYPE html>
@@ -64,7 +62,7 @@ $orderId = 1;
 	//we pass the session id to our localstorage instance
 	const _localStorage = new localstorage(<?php echo $_SESSION['custid'] ? $_SESSION['custid'] : 0 ; ?>);
 	</script>	
-	<link href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/blitzer/jquery-ui.css"
+	<link href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.9/themes/blitzer/jquery-ui.css"
 	    rel="stylesheet" type="text/css" />
 	<div id="placed" style="display: none">
 	    Order was Placed!
@@ -86,8 +84,8 @@ $orderId = 1;
 	// console.log(orderId);
 	var formData = new FormData();
 	var images = _localStorage.uploadImage;
-	// var	url = 'http://182.18.157.79/medv/api/Image/uploadPrescription';	
-	var url = '<?php echo $URL; ?>' + '/ajax/check.php';
+	var	url = 'http://182.18.157.79/medv/api/Image/uploadPrescription';	
+	// var url = '<?php echo $URL; ?>' + '/ajax/check.php';
 	uploadImage(images, url)
 	.then((res)=>{
 		$('#placed').dialog({
@@ -99,7 +97,7 @@ $orderId = 1;
 		        setTimeout(function() {
 		            $('#placed').dialog('close');
 		            _localStorage.emptyCart();
-		            // window.location.href = '<?php echo $URL; ?>' + '/user/myaccount/';
+		            window.location.href = '<?php echo $URL; ?>' + '/user/myaccount/';
 		        }, 900);
 		    }
 		});
