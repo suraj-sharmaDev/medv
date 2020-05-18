@@ -263,7 +263,11 @@ input[type=number] {
         <div id="cart-div-view">
         <!-- this is where the localstorage data will be filled           -->
         </div>
-</div>
+        <div>
+          <span>Some messages for us</span>
+          <input type="text" name="OrderComment" placeholder="Enter some messages" />
+        </div>
+      </div>
 <div class="form-group text-center" style="padding-top: 25px">
   <input type="submit" class="btn btn-submit form-control" name="submit" value="Request to Quote"><!-- <br>OR<br>
   <input type="reset" class="btn" id="cancel" value="CANCEL"> -->
