@@ -14,7 +14,7 @@
    $cf_request["customerName"] = $_POST['customerName'];
    $cf_request["customerEmail"] = $_POST['customerEmail'];
 
-   $cf_request["returnUrl"] = $URL."/ajax/success.php";
+   $cf_request["returnUrl"] = $URL."/ajax/complete.php";
 
    $timeout = 10;
    
@@ -32,5 +32,10 @@
    $curl_result=curl_exec ($ch);
    curl_close ($ch);
 
-   print_r($curl_result);
+   $decoded = json_decode($curl_result, true);
+   if($decoded['paymentLink']){
+   	header("Location: ".$decoded['paymentLink']);
+   }else{
+   	header("Location: ".$URL.'/ajax/fail.php');
+   }
 ?>
