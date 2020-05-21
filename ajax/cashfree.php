@@ -1,18 +1,22 @@
 <?php
    require_once('../include/constants.php');
    
-   $apiEndpoint = "https://test.cashfree.com";
+   if($_GET['env']=='test'){
+	   $apiEndpoint = "https://test.cashfree.com";
+   }else{
+	   $apiEndpoint = "https://api.cashfree.com";   	
+   }
    $opUrl = $apiEndpoint."/api/v1/order/create";
 
    $cf_request = array();
-   $cf_request["appId"] = $_POST['appId'];
-   $cf_request["secretKey"] = $_POST['secretKey'];
-   $cf_request["orderId"] = $_POST['orderId']; 
-   $cf_request["orderAmount"] = $_POST['orderAmount'];
-   $cf_request["orderNote"] = $_POST['orderNote'] ? $_POST['orderNote'] : 'No notes provided';
-   $cf_request["customerPhone"] = $_POST['customerPhone'];
-   $cf_request["customerName"] = $_POST['customerName'];
-   $cf_request["customerEmail"] = $_POST['customerEmail'];
+   $cf_request["appId"] = $_GET['appId'];
+   $cf_request["secretKey"] = $_GET['secretKey'];
+   $cf_request["orderId"] = $_GET['orderId']; 
+   $cf_request["orderAmount"] = $_GET['orderAmount'];
+   $cf_request["orderNote"] = $_GET['orderNote'] ? $_GET['orderNote'] : 'No notes provided';
+   $cf_request["customerPhone"] = $_GET['customerPhone'];
+   $cf_request["customerName"] = $_GET['customerName'];
+   $cf_request["customerEmail"] = $_GET['customerEmail'];
 
    $cf_request["returnUrl"] = $URL."/ajax/complete.php";
 
